@@ -1,0 +1,94 @@
+/* The application register's components. Every color, size, face and timing is a custom property
+   that comes from tokens/ (the site's own, and tokens/app.ts). Nothing here is a number that
+   should be tuned; tune the token.
+
+   The house rules are the site's. One dark world. Words sit on a panel, never straight on the
+   field. Nothing animates on hover, focus or press. Headings and short lines balance; sentences
+   wrap pretty; numbers are tabular. A control takes the face of what it sits in. Every focus ring
+   is the docks'. On a touch screen a target is 44px. A reader who asks for less transparency gets
+   solid panels. Classes are named for what they are. */
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--paper); }
+body { margin: 0; color: var(--ink); font: var(--app-size-body)/var(--app-leading-body) var(--app-face-body); letter-spacing: var(--app-spacing-ui); font-feature-settings: "kern"; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: .15em; }
+:focus-visible { outline: var(--dock-border) solid var(--dock-focus); outline-offset: 4px; }
+button, input, select, textarea { font: inherit; letter-spacing: inherit; color: inherit; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+h1, h2, h3 { font-weight: 400; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+
+/* the field: fixed behind everything, never takes a pointer, fades in once it is running (the site's rule) */
+.air { position: fixed; left: 0; top: 0; width: 100%; height: 100%; height: 100lvh; z-index: -2; pointer-events: none; opacity: 0; transition-property: opacity; transition-timing-function: ease-in-out; }
+.air[data-on] { opacity: 1; }
+
+/* the page: one column of panels */
+.app { max-width: var(--app-measure); margin: 0 auto; padding: var(--app-page-pad); padding-bottom: 48px; }
+.app > * + * { margin-top: var(--panel-gutter); }
+
+/* a surface words can sit on. Solid until a field runs behind it; then the docks' glass */
+.bar, .panel, .stat, .line, .group-title, .empty { background: var(--panel); border: var(--dock-border) solid var(--panel-border); border-radius: var(--panel-radius); }
+html[data-field] :is(.bar, .panel, .stat, .line, .group-title, .empty) { background: var(--glass); -webkit-backdrop-filter: var(--glass-filter); backdrop-filter: var(--glass-filter); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { html[data-field] :is(.bar, .panel, .stat, .line, .group-title, .empty) { background: var(--scrim); } }
+@media (prefers-reduced-transparency: reduce) { html[data-field] :is(.bar, .panel, .stat, .line, .group-title, .empty) { background: var(--scrim); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+
+/* the bar: where you are, and the way to everywhere else */
+.bar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; padding: var(--panel-pad); }
+.bar-title { font: var(--app-size-title)/var(--app-leading-title) var(--app-face-title); letter-spacing: 0; }
+.bar-meta { color: var(--quiet); font-size: var(--app-size-ui); font-variant-numeric: tabular-nums; }
+.bar-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-inline-start: auto; font-size: var(--app-size-ui); }
+.bar-nav a { color: var(--quiet); text-decoration: none; }
+.bar-nav a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .4em; }
+
+/* a group of panels, under a label */
+.group { margin-top: calc(var(--panel-gutter) * 4); }
+.group-title, .label { font: var(--app-size-label)/1.2 var(--app-face-label); letter-spacing: var(--app-spacing-label); text-transform: uppercase; color: var(--tone-quiet); }
+.group-title { display: inline-block; padding: 6px 10px; margin: 0 0 var(--panel-gutter); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(var(--app-card-min), 100%), 1fr)); gap: var(--panel-gutter); }
+.columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 330px); gap: calc(var(--panel-gutter) * 4); align-items: start; }
+@media (max-width: 900px) { .columns { grid-template-columns: minmax(0, 1fr); } }
+
+/* the panel: the charts' card. Its state is a tone: a thin flat rule down its leading edge */
+.panel, .line { position: relative; padding: var(--panel-pad); min-width: 0; --tone: var(--panel-border); }
+.panel::before, .line::before { content: ""; position: absolute; inset-block: -1px; inset-inline-start: -1px; width: 2px; background: var(--tone); border-radius: var(--panel-radius) 0 0 var(--panel-radius); }
+a.panel { display: block; color: inherit; text-decoration: none; }
+.panel-title { font: var(--app-size-title)/var(--app-leading-title) var(--app-face-title); letter-spacing: 0; overflow-wrap: anywhere; }
+.line-title { font-size: var(--app-size-body); overflow-wrap: anywhere; }
+.line + .line { margin-top: var(--panel-gutter); }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.panel > * + *, .line > * + * { margin-top: 8px; }
+.quiet { color: var(--quiet); font-size: var(--app-size-ui); line-height: var(--app-leading-ui); }
+.when { color: var(--tone-quiet); font-size: var(--app-size-ui); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.list { padding-inline-start: 1.2em; font-size: var(--app-size-ui); line-height: var(--app-leading-ui); }
+.list[data-tone] { color: var(--tone); }
+.faded { opacity: .62; }
+.empty { padding: 18px; border-style: dashed; color: var(--quiet); font-size: var(--app-size-ui); }
+code { font: var(--app-size-ui)/1.4 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0; color: var(--quiet); overflow-wrap: anywhere; }
+
+/* tones: what a thing's state is. Set on the thing; everything inside that shows state reads it */
+[data-tone="work"] { --tone: var(--tone-work); }
+[data-tone="needs"] { --tone: var(--tone-needs); }
+[data-tone="ok"] { --tone: var(--tone-ok); }
+[data-tone="bad"] { --tone: var(--tone-bad); }
+[data-tone="quiet"] { --tone: var(--tone-quiet); }
+
+/* a pill: a state, said in a word. Outlined, with no fill, as the site's own status chip is: a
+   tone behind its own words cannot hold AA (the red falls to 3.2:1 at any wash worth seeing) */
+.pill { display: inline-block; padding: 3px 7px; border: var(--dock-border) solid var(--tone, var(--tone-quiet)); border-radius: var(--panel-radius); font: var(--app-size-label)/1.2 var(--app-face-label); letter-spacing: var(--app-spacing-label); text-transform: uppercase; white-space: nowrap; color: var(--tone, var(--tone-quiet)); }
+
+/* a button: outlined in the docks' line, as the site's begin is. It does not change on hover */
+.button { padding: 8px 12px; font: var(--app-size-ui)/1 var(--app-face-label); letter-spacing: var(--app-spacing-ui); color: var(--ink); background: none; border: var(--dock-border) solid var(--dock-line); border-radius: 0; cursor: pointer; }
+@media (pointer: coarse) { .button { min-height: 44px; } }
+
+/* a stat: a small quiet label over a large numeral, as the charts set them */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr)); gap: var(--panel-gutter); }
+.stat { display: flex; flex-direction: column; gap: .35rem; padding: var(--panel-pad); min-width: 0; }
+.stat-numeral { margin-top: auto; font: var(--app-size-numeral)/1 var(--app-face-numeral); letter-spacing: 0; color: var(--tone, var(--ink)); font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+
+/* steps: thin flat bars with gaps, as the charts draw theirs. Done, the one under way, to come */
+.steps { display: flex; gap: 2px; height: 4px; }
+.steps > * { flex: 1; background: var(--panel-border); }
+.steps > [data-step="done"] { background: var(--tone, var(--tone-work)); }
+.steps > [data-step="now"] { background: none; box-shadow: inset 0 0 0 1px var(--tone, var(--tone-work)); }
+
+@media (pointer: coarse) { .bar-nav a, a.panel { min-height: 44px; } .bar-nav a { display: inline-flex; align-items: center; } }

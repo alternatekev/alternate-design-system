@@ -1,0 +1,97 @@
+/* alternate-design-system: the application register. Generated from tokens/ by scripts/build.ts; edit css/app.css or the tokens, never this file. */
+:root{--paper:oklch(0.135 0.012 265);--ink:oklch(0.93 0.008 85);--quiet:oklch(0.8 0.012 260);--rule:oklch(0.3 0.012 260);--accent:oklch(0.86 0.09 205);--scrim:oklch(0.135 0.012 265 / 0.94);--dialup:oklch(0.66 0.09 252);--broadband:oklch(0.63 0.25 29);--apps:oklch(0.78 0.15 75);--components:oklch(0.66 0.11 180);--agents:oklch(0.6 0.2 290);--dock-line:oklch(0.93 0.008 85 / 0.45);--dock-grip:oklch(0.93 0.008 85 / 0.5);--dock-ghost:oklch(0.93 0.008 85 / 0.35);--dock-focus:oklch(0.93 0.008 85);--dock-glass:oklch(0.135 0.012 265 / 0.6);--dock-glass-filter:blur(20px) saturate(1.4);--dock-border:1px;--dock-lifted:0.5;--dock-ghost-fade:120ms;--dock-grip-hit:40px;--dock-grip-w:9px;--dock-grip-h:12px;--dock-grip-step:4px;--dock-grip-line:1px;--dock-caret-blink:1060ms;--type-char:60ms;--type-erase:25ms;--type-steps:16;--zoom-near:0.16;--zoom-close:0.22;--chart-panel:oklch(0.176 0.012 263.8);--chart-panel-border:oklch(0.3 0.012 260);--chart-radius:4px;--chart-gutter:6px;--chart-pad:12px 14px;--chart-series:oklch(0.92 0.07 198);--chart-exception:oklch(0.8 0.11 24);--chart-better:oklch(0.8 0.17 155);--chart-worse:oklch(0.64 0.2 24);--chart-headline:oklch(0.88 0.17 95);--chart-label:oklch(0.68 0.012 260);--chart-numeral:oklch(0.93 0.008 85);--chart-hairline:oklch(0.3 0.012 260);--chart-hairline-w:1px;--chart-face-label:var(--face-pixel);--chart-face-numeral:var(--face-numeral);--chart-label-size:11px;--chart-numeral-size:clamp(22px, 2.4vw, 30px);--chart-ends-size:11px;--chart-label-spacing:0.08em;--chart-numeral-spacing:0em;--chart-strip:48px;--chart-strip-tall:96px}
+:root{--face-pixel:"argent-pixel-cf", ui-sans-serif, system-ui, sans-serif;--face-display:"le-monde-livre-classic-byol", ui-serif, Georgia, serif;--face-text:"le-monde-livre-classic-byol", ui-serif, Georgia, serif;--face-numeral:"trade-gothic-next-condensed", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;--panel:oklch(0.176 0.012 263.8);--panel-border:oklch(0.3 0.012 260);--panel-radius:4px;--panel-gutter:6px;--panel-pad:12px 14px;--glass:oklch(0.135 0.012 265 / 0.6);--glass-filter:blur(20px) saturate(1.4);--tone-work:oklch(0.92 0.07 198);--tone-needs:oklch(0.88 0.17 95);--tone-ok:oklch(0.8 0.17 155);--tone-bad:oklch(0.64 0.2 24);--tone-quiet:oklch(0.68 0.012 260);--app-face-label:var(--face-pixel);--app-face-body:var(--face-pixel);--app-face-title:var(--face-display);--app-face-numeral:var(--face-numeral);--app-size-label:11px;--app-size-ui:13px;--app-size-body:15px;--app-size-title:24px;--app-size-numeral:clamp(22px, 2.4vw, 30px);--app-leading-ui:1.5;--app-leading-body:1.55;--app-leading-title:1.15;--app-spacing-label:0.08em;--app-spacing-ui:0.02em;--app-measure:1180px;--app-page-pad:20px 16px;--app-card-min:300px}
+/* The application register's components. Every color, size, face and timing is a custom property
+   that comes from tokens/ (the site's own, and tokens/app.ts). Nothing here is a number that
+   should be tuned; tune the token.
+
+   The house rules are the site's. One dark world. Words sit on a panel, never straight on the
+   field. Nothing animates on hover, focus or press. Headings and short lines balance; sentences
+   wrap pretty; numbers are tabular. A control takes the face of what it sits in. Every focus ring
+   is the docks'. On a touch screen a target is 44px. A reader who asks for less transparency gets
+   solid panels. Classes are named for what they are. */
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--paper); }
+body { margin: 0; color: var(--ink); font: var(--app-size-body)/var(--app-leading-body) var(--app-face-body); letter-spacing: var(--app-spacing-ui); font-feature-settings: "kern"; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: .15em; }
+:focus-visible { outline: var(--dock-border) solid var(--dock-focus); outline-offset: 4px; }
+button, input, select, textarea { font: inherit; letter-spacing: inherit; color: inherit; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+h1, h2, h3 { font-weight: 400; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+
+/* the field: fixed behind everything, never takes a pointer, fades in once it is running (the site's rule) */
+.air { position: fixed; left: 0; top: 0; width: 100%; height: 100%; height: 100lvh; z-index: -2; pointer-events: none; opacity: 0; transition-property: opacity; transition-timing-function: ease-in-out; }
+.air[data-on] { opacity: 1; }
+
+/* the page: one column of panels */
+.app { max-width: var(--app-measure); margin: 0 auto; padding: var(--app-page-pad); padding-bottom: 48px; }
+.app > * + * { margin-top: var(--panel-gutter); }
+
+/* a surface words can sit on. Solid until a field runs behind it; then the docks' glass */
+.bar, .panel, .stat, .line, .group-title, .empty { background: var(--panel); border: var(--dock-border) solid var(--panel-border); border-radius: var(--panel-radius); }
+html[data-field] :is(.bar, .panel, .stat, .line, .group-title, .empty) { background: var(--glass); -webkit-backdrop-filter: var(--glass-filter); backdrop-filter: var(--glass-filter); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { html[data-field] :is(.bar, .panel, .stat, .line, .group-title, .empty) { background: var(--scrim); } }
+@media (prefers-reduced-transparency: reduce) { html[data-field] :is(.bar, .panel, .stat, .line, .group-title, .empty) { background: var(--scrim); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+
+/* the bar: where you are, and the way to everywhere else */
+.bar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; padding: var(--panel-pad); }
+.bar-title { font: var(--app-size-title)/var(--app-leading-title) var(--app-face-title); letter-spacing: 0; }
+.bar-meta { color: var(--quiet); font-size: var(--app-size-ui); font-variant-numeric: tabular-nums; }
+.bar-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-inline-start: auto; font-size: var(--app-size-ui); }
+.bar-nav a { color: var(--quiet); text-decoration: none; }
+.bar-nav a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .4em; }
+
+/* a group of panels, under a label */
+.group { margin-top: calc(var(--panel-gutter) * 4); }
+.group-title, .label { font: var(--app-size-label)/1.2 var(--app-face-label); letter-spacing: var(--app-spacing-label); text-transform: uppercase; color: var(--tone-quiet); }
+.group-title { display: inline-block; padding: 6px 10px; margin: 0 0 var(--panel-gutter); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(var(--app-card-min), 100%), 1fr)); gap: var(--panel-gutter); }
+.columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 330px); gap: calc(var(--panel-gutter) * 4); align-items: start; }
+@media (max-width: 900px) { .columns { grid-template-columns: minmax(0, 1fr); } }
+
+/* the panel: the charts' card. Its state is a tone: a thin flat rule down its leading edge */
+.panel, .line { position: relative; padding: var(--panel-pad); min-width: 0; --tone: var(--panel-border); }
+.panel::before, .line::before { content: ""; position: absolute; inset-block: -1px; inset-inline-start: -1px; width: 2px; background: var(--tone); border-radius: var(--panel-radius) 0 0 var(--panel-radius); }
+a.panel { display: block; color: inherit; text-decoration: none; }
+.panel-title { font: var(--app-size-title)/var(--app-leading-title) var(--app-face-title); letter-spacing: 0; overflow-wrap: anywhere; }
+.line-title { font-size: var(--app-size-body); overflow-wrap: anywhere; }
+.line + .line { margin-top: var(--panel-gutter); }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.panel > * + *, .line > * + * { margin-top: 8px; }
+.quiet { color: var(--quiet); font-size: var(--app-size-ui); line-height: var(--app-leading-ui); }
+.when { color: var(--tone-quiet); font-size: var(--app-size-ui); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.list { padding-inline-start: 1.2em; font-size: var(--app-size-ui); line-height: var(--app-leading-ui); }
+.list[data-tone] { color: var(--tone); }
+.faded { opacity: .62; }
+.empty { padding: 18px; border-style: dashed; color: var(--quiet); font-size: var(--app-size-ui); }
+code { font: var(--app-size-ui)/1.4 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0; color: var(--quiet); overflow-wrap: anywhere; }
+
+/* tones: what a thing's state is. Set on the thing; everything inside that shows state reads it */
+[data-tone="work"] { --tone: var(--tone-work); }
+[data-tone="needs"] { --tone: var(--tone-needs); }
+[data-tone="ok"] { --tone: var(--tone-ok); }
+[data-tone="bad"] { --tone: var(--tone-bad); }
+[data-tone="quiet"] { --tone: var(--tone-quiet); }
+
+/* a pill: a state, said in a word. Outlined, with no fill, as the site's own status chip is: a
+   tone behind its own words cannot hold AA (the red falls to 3.2:1 at any wash worth seeing) */
+.pill { display: inline-block; padding: 3px 7px; border: var(--dock-border) solid var(--tone, var(--tone-quiet)); border-radius: var(--panel-radius); font: var(--app-size-label)/1.2 var(--app-face-label); letter-spacing: var(--app-spacing-label); text-transform: uppercase; white-space: nowrap; color: var(--tone, var(--tone-quiet)); }
+
+/* a button: outlined in the docks' line, as the site's begin is. It does not change on hover */
+.button { padding: 8px 12px; font: var(--app-size-ui)/1 var(--app-face-label); letter-spacing: var(--app-spacing-ui); color: var(--ink); background: none; border: var(--dock-border) solid var(--dock-line); border-radius: 0; cursor: pointer; }
+@media (pointer: coarse) { .button { min-height: 44px; } }
+
+/* a stat: a small quiet label over a large numeral, as the charts set them */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr)); gap: var(--panel-gutter); }
+.stat { display: flex; flex-direction: column; gap: .35rem; padding: var(--panel-pad); min-width: 0; }
+.stat-numeral { margin-top: auto; font: var(--app-size-numeral)/1 var(--app-face-numeral); letter-spacing: 0; color: var(--tone, var(--ink)); font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+
+/* steps: thin flat bars with gaps, as the charts draw theirs. Done, the one under way, to come */
+.steps { display: flex; gap: 2px; height: 4px; }
+.steps > * { flex: 1; background: var(--panel-border); }
+.steps > [data-step="done"] { background: var(--tone, var(--tone-work)); }
+.steps > [data-step="now"] { background: none; box-shadow: inset 0 0 0 1px var(--tone, var(--tone-work)); }
+
+@media (pointer: coarse) { .bar-nav a, a.panel { min-height: 44px; } .bar-nav a { display: inline-flex; align-items: center; } }

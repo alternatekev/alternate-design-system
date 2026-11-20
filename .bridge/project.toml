@@ -1,0 +1,12 @@
+name = "design-system"
+title = "The design system"
+
+[checks]
+commands = [
+  "npm ci --no-audit --no-fund",
+  "npm run check",
+]
+timeout_seconds = 600
+
+[mirror]
+github = "alternatekev/alternate-design-system"

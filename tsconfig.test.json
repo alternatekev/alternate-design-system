@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["./reference/site-e2fe890/*"] }
+  },
+  "include": ["tokens", "src", "scripts", "tests", "reference"]
+}
